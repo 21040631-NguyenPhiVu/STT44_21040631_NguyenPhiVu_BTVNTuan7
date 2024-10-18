@@ -31,6 +31,7 @@ const Screen_01 = () => {
     const handleLogin = () => {
         for (let i = 0; i < objects.length; i++) {
             if (email === objects[i].email && password === objects[i].password) {
+                alert('Login successfully');
                 navigation.navigate('Screen_02');
                 return;
             }

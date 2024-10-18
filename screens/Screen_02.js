@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet, TextInput, FlatList, SafeAreaView, ScrollView } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 const Screen_02 = () => {
     const products = [
@@ -17,6 +18,7 @@ const Screen_02 = () => {
         { id: 12, type: 'macbook', name: 'Macbook Pro', price: '$3999', image: require('../assets/Data/macbookPro.png') },
     ];
 
+    const navigation = useNavigation();
     const [selectedCategoryType, setSelectedCategoryType] = useState('iphone');
     const [selectedCategory, setSelectedCategory] = useState('Best Sales');
     const [showAll, setShowAll] = useState(false);
@@ -45,7 +47,9 @@ const Screen_02 = () => {
         <SafeAreaView style={styles.container}>
             <View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Image source={require('../assets/Data/back.png')} style={{ marginHorizontal: 10 }} />
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Image source={require('../assets/Data/back.png')} style={{ marginHorizontal: 10 }} />
+                    </TouchableOpacity>
                     <Text style={{ fontSize: 23, fontWeight: 'bold', marginHorizontal: 10 }}>Electronics</Text>
                     <TouchableOpacity>
                         <Image source={require('../assets/Data/basket.png')} style={{ marginLeft: 120 }} />
