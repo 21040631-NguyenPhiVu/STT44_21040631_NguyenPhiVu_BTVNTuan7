@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet, TextInput, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, Image, StyleSheet, TextInput, FlatList, SafeAreaView, ScrollView } from "react-native";
 
 const Screen_02 = () => {
     const products = [
@@ -8,27 +8,37 @@ const Screen_02 = () => {
         { id: 3, type: 'iphone', name: 'Iphone XSMax', price: '$799', image: require('../assets/Data/3.png') },
         { id: 4, type: 'iphone', name: 'Iphone 13', price: '$999', image: require('../assets/Data/4.png') },
     ];
+
+    const [selectedCategory, setSelectedCategory] = useState('Best Sales');
+
     return (
-        <View style={styles.container}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Image source={require('../assets/Data/back.png')} style={{ marginHorizontal: 10 }} />
-                <Text style={{ fontSize: 23, fontWeight: 'bold', marginHorizontal: 10 }}>Electronics</Text>
-                <TouchableOpacity>
-                    <Image source={require('../assets/Data/basket.png')} style={{ marginLeft: 120 }} />
-                </TouchableOpacity>
-                <Image source={require('../assets/Data/Avatar_31.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
-            </View>
-
-            <View style={{ flexDirection: 'row', width: '90%', alignSelf: 'center', height: 45, marginTop: 20 }}>
-                <View style={{ flexDirection: 'row', width: '85%', backgroundColor: '#f3f4f6' }}>
-                    <Image source={require('../assets/Data/search.png')} style={{ width: 20, height: 20, alignSelf: 'center', marginHorizontal: 10 }} />
-                    <TextInput placeholder='Search' style={{ width: '105%', height: 45, fontSize: 17 }} />
+        <SafeAreaView style={styles.container}>
+            <View>
+                {/* Header */}
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Image source={require('../assets/Data/back.png')} style={{ marginHorizontal: 10 }} />
+                    <Text style={{ fontSize: 23, fontWeight: 'bold', marginHorizontal: 10 }}>Electronics</Text>
+                    <TouchableOpacity>
+                        <Image source={require('../assets/Data/basket.png')} style={{ marginLeft: 120 }} />
+                    </TouchableOpacity>
+                    <Image source={require('../assets/Data/Avatar_31.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
                 </View>
-                <TouchableOpacity style={{ width: 45, marginLeft: 15 }}>
-                    <Image source={require('../assets/Data/filter.png')} style={{ width: 55, height: 45, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', resizeMode: 'contain' }} />
-                </TouchableOpacity>
+
+                {/* Search Section */}
+                <View style={{ flexDirection: 'row', width: '90%', alignSelf: 'center', height: 45, marginTop: 20 }}>
+                    <View style={{ flexDirection: 'row', width: '85%', backgroundColor: '#f3f4f6' }}>
+                        <Image source={require('../assets/Data/search.png')} style={{ width: 20, height: 20, alignSelf: 'center', marginHorizontal: 10 }} />
+                        <TextInput placeholder='Search' style={{ width: '105%', height: 45, fontSize: 17 }} />
+                    </View>
+                    <TouchableOpacity style={{ width: 45, marginLeft: 15 }}>
+                        <Image source={require('../assets/Data/filter.png')} style={{ width: 55, height: 45, alignSelf: 'center', alignItems: 'center', justifyContent: 'center', resizeMode: 'contain' }} />
+                    </TouchableOpacity>
+                </View>
             </View>
 
+            {/* Scrollable Section */}
+
+            {/* Categories */}
             <View style={{ flexDirection: 'row', width: '90%', alignSelf: 'center', justifyContent: 'space-between', marginTop: 20 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 25 }}>Categories</Text>
                 <TouchableOpacity>
@@ -54,85 +64,99 @@ const Screen_02 = () => {
                 </TouchableOpacity>
             </View>
 
-            <View style={{
-                flexDirection: 'row',
-                width: '90%',
-                alignSelf: 'center',
-                justifyContent: 'space-between',
-                marginTop: 20,
-            }}>
-                <TouchableOpacity style={{
-                    backgroundColor: '#ebfdff',
-                    width: 105,
-                    height: 35,
-                    borderRadius: 15,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
-                    <Text style={{ color: '#2bc9de', fontSize: 14, fontWeight: 'bold' }}>Best Sales</Text>
+            {/* Filters */}
+            <View style={{ flexDirection: 'row', width: '90%', alignSelf: 'center', justifyContent: 'space-between', marginTop: 20 }}>
+                <TouchableOpacity
+                    style={[styles.filterButton, selectedCategory === 'Best Sales' && styles.selectedButton]}
+                    onPress={() => setSelectedCategory('Best Sales')}
+                >
+                    <Text style={[styles.filterButtonText, selectedCategory === 'Best Sales' && styles.selectedButtonText]}>Best Sales</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{
-                    backgroundColor: '#ffffff',
-                    width: 105,
-                    height: 35,
-                    borderRadius: 15,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
-                    <Text style={{ color: 'gray', fontSize: 14, fontWeight: '500' }}>Best Matched</Text>
+                <TouchableOpacity
+                    style={[styles.filterButton, selectedCategory === 'Best Matched' && styles.selectedButton]}
+                    onPress={() => setSelectedCategory('Best Matched')}
+                >
+                    <Text style={[styles.filterButtonText, selectedCategory === 'Best Matched' && styles.selectedButtonText]}>Best Matched</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{
-                    backgroundColor: '#ffffff',
-                    width: 105,
-                    height: 35,
-                    borderRadius: 15,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                }}>
-                    <Text style={{ color: 'gray', fontSize: 14, fontWeight: '500' }}>Popular</Text>
+                <TouchableOpacity
+                    style={[styles.filterButton, selectedCategory === 'Popular' && styles.selectedButton]}
+                    onPress={() => setSelectedCategory('Popular')}
+                >
+                    <Text style={[styles.filterButtonText, selectedCategory === 'Popular' && styles.selectedButtonText]}>Popular</Text>
                 </TouchableOpacity>
             </View>
 
-            <FlatList
-                data={products}
-                keyExtractor={item => item.id.toString()}
-                renderItem={({ item }) => (
-                    <View style={styles.productContainer}>
-                        <Image source={item.image} style={styles.productImage} />
-                        <View style={styles.productDetails}>
-                            <Text style={styles.productName}>{item.name}</Text>
-                            <Image source={require('../assets/Data/Rating5.png')} style={{ width: 70, height: 20, resizeMode: 'contain' }} />
+            <ScrollView ontentContainerStyle={{ flexGrow: 1 }}>
+                {/* Product List */}
+                <FlatList
+                    data={products}
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({ item }) => (
+                        <View style={styles.productContainer}>
+                            <Image source={item.image} style={styles.productImage} />
+                            <View style={styles.productDetails}>
+                                <Text style={styles.productName}>{item.name}</Text>
+                                <Image source={require('../assets/Data/Rating5.png')} style={{ width: 70, height: 20, resizeMode: 'contain' }} />
+                            </View>
+                            <View style={styles.priceContainer}>
+                                <TouchableOpacity>
+                                    <Image source={require('../assets/Data/add.png')} style={styles.addIcon} />
+                                </TouchableOpacity>
+                                <Text style={styles.productPrice}>{item.price}</Text>
+                            </View>
                         </View>
-                        <View style={styles.priceContainer}>
-                            <TouchableOpacity>
-                                <Image source={require('../assets/Data/add.png')} style={styles.addIcon} />
-                            </TouchableOpacity>
-                            <Text style={styles.productPrice}>{item.price}</Text>
-                        </View>
-                    </View>
-                )}
-            />
+                    )}
+                />
 
-            <TouchableOpacity style={{
-                width: '90%',
-                height: 50,
-                backgroundColor: '#f3f4f6',
-                borderRadius: 10,
-                alignItems: 'center',
-                justifyContent: 'center',
-                alignSelf: 'center',
-            }}>
-                <Text>See all</Text>
-            </TouchableOpacity>
+                {/* "See All" Button */}
+                <TouchableOpacity style={{
+                    width: '90%',
+                    height: 50,
+                    backgroundColor: '#f3f4f6',
+                    borderRadius: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    marginTop: 10,
+                }}>
+                    <Text style={{ color: 'gray', fontSize: 21 }}>See all</Text>
+                </TouchableOpacity>
 
-            <View style={{
-                width: '90%',
-                alignSelf: 'center',
-                height: 100,
-            }}>
-                <Image source={require('../assets/Data/banner.png')} style={{ width: '100%', height: 70, marginTop: 20 }} />
+                {/* Banner */}
+                <View style={{
+                    width: '90%',
+                    alignSelf: 'center',
+                    height: 100,
+                    marginBottom: 100,
+                }}>
+                    <Image source={require('../assets/Data/banner.png')} style={{ width: '100%', height: 150, marginTop: 20, borderRadius: 12 }} />
+                </View>
+            </ScrollView>
+
+            {/* Bottom Navigation */}
+            <View style={styles.bottomNavigation}>
+                <TouchableOpacity style={styles.navItem}>
+                    <Image source={require('../assets/Data/clarity_home_solid.png')} style={styles.navIcon} />
+                    <Text style={styles.navText}>Home</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navItem}>
+                    <Image source={require('../assets/Data/search.png')} style={styles.navIcon} />
+                    <Text style={styles.navText}>Search</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navItem}>
+                    <Image source={require('../assets/Data/mdi_heart_outline.png')} style={styles.navIcon} />
+                    <Text style={styles.navText}>Favorites</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navItem}>
+                    <Image source={require('../assets/Data/messageicon.png')} style={styles.navIcon} />
+                    <Text style={styles.navText}>Inbox</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.navItem}>
+                    <Image source={require('../assets/Data/codicon_account.png')} style={styles.navIcon} />
+                    <Text style={styles.navText}>Account</Text>
+                </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -158,29 +182,67 @@ const styles = StyleSheet.create({
     },
     productImage: {
         width: 100,
-        height: 100,
+        height: 80,
         resizeMode: 'contain',
     },
     productDetails: {
         flex: 1,
-        marginLeft: 15,
+        marginLeft: 10,
     },
     productName: {
-        fontSize: 19,
+        fontSize: 16,
         fontWeight: 'bold',
-        marginBottom: 10,
     },
     priceContainer: {
-        alignItems: 'flex-end',
-        marginRight: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    productPrice: {
+        fontSize: 18,
+        fontWeight: 'bold',
     },
     addIcon: {
         width: 30,
         height: 30,
-        marginBottom: 10,
+        marginRight: 10,
     },
-    productPrice: {
-        fontSize: 20,
+    bottomNavigation: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        backgroundColor: '#fff',
+        paddingVertical: 10,
+        borderTopWidth: 1,
+        borderColor: '#ccc',
+    },
+    navItem: {
+        alignItems: 'center',
+    },
+    navIcon: {
+        width: 25,
+        height: 25,
+    },
+    navText: {
+        fontSize: 12,
+        color: '#333',
+    },
+    filterButton: {
+        backgroundColor: '#ffffff',
+        width: 105,
+        height: 35,
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    selectedButton: {
+        backgroundColor: '#ebfdff',
+    },
+    filterButtonText: {
+        color: 'gray',
+        fontSize: 14,
+        fontWeight: '500',
+    },
+    selectedButtonText: {
+        color: '#2bc9de',
         fontWeight: 'bold',
     },
 });
