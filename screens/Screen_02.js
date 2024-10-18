@@ -7,14 +7,43 @@ const Screen_02 = () => {
         { id: 2, type: 'iphone', name: 'Iphone 11', price: '$889', image: require('../assets/Data/2.png') },
         { id: 3, type: 'iphone', name: 'Iphone XSMax', price: '$799', image: require('../assets/Data/3.png') },
         { id: 4, type: 'iphone', name: 'Iphone 13', price: '$999', image: require('../assets/Data/4.png') },
+        { id: 5, type: 'ipad', name: 'Ipad', price: '$1999', image: require('../assets/Data/ipad.png') },
+        { id: 6, type: 'ipad', name: 'Ipad Air', price: '$1299', image: require('../assets/Data/ipadAir.png') },
+        { id: 7, type: 'ipad', name: 'Ipad Air2', price: '$1399', image: require('../assets/Data/ipadAir2.png') },
+        { id: 8, type: 'ipad', name: 'Ipad Mini', price: '$799', image: require('../assets/Data/ipadMini.png') },
+        { id: 9, type: 'macbook', name: 'Macbook', price: '$2999', image: require('../assets/Data/macbook.png') },
+        { id: 10, type: 'macbook', name: 'Macbook Air', price: '$1999', image: require('../assets/Data/macbookAir.png') },
+        { id: 11, type: 'macbook', name: 'Macbook M1', price: '$2999', image: require('../assets/Data/macbookM1.png') },
+        { id: 12, type: 'macbook', name: 'Macbook Pro', price: '$3999', image: require('../assets/Data/macbookPro.png') },
     ];
 
+    const [selectedCategoryType, setSelectedCategoryType] = useState('iphone');
     const [selectedCategory, setSelectedCategory] = useState('Best Sales');
+    const [showAll, setShowAll] = useState(false);
+
+    const filteredProducts = products.filter(product => product.type === selectedCategoryType);
+    const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 4);
+
+    const getFilteredProductList = () => {
+        if (showAll) {
+            return products;
+        }
+
+        switch (selectedCategory) {
+            case 'Best Sales':
+                return displayedProducts;
+            case 'Best Matched':
+                return displayedProducts.slice(0, 3);
+            case 'Popular':
+                return displayedProducts.slice(3, 6);
+            default:
+                return displayedProducts;
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
             <View>
-                {/* Header */}
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Image source={require('../assets/Data/back.png')} style={{ marginHorizontal: 10 }} />
                     <Text style={{ fontSize: 23, fontWeight: 'bold', marginHorizontal: 10 }}>Electronics</Text>
@@ -24,7 +53,6 @@ const Screen_02 = () => {
                     <Image source={require('../assets/Data/Avatar_31.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
                 </View>
 
-                {/* Search Section */}
                 <View style={{ flexDirection: 'row', width: '90%', alignSelf: 'center', height: 45, marginTop: 20 }}>
                     <View style={{ flexDirection: 'row', width: '85%', backgroundColor: '#f3f4f6' }}>
                         <Image source={require('../assets/Data/search.png')} style={{ width: 20, height: 20, alignSelf: 'center', marginHorizontal: 10 }} />
@@ -36,9 +64,6 @@ const Screen_02 = () => {
                 </View>
             </View>
 
-            {/* Scrollable Section */}
-
-            {/* Categories */}
             <View style={{ flexDirection: 'row', width: '90%', alignSelf: 'center', justifyContent: 'space-between', marginTop: 20 }}>
                 <Text style={{ fontWeight: 'bold', fontSize: 25 }}>Categories</Text>
                 <TouchableOpacity>
@@ -53,18 +78,17 @@ const Screen_02 = () => {
                 justifyContent: 'space-between',
                 marginTop: 20,
             }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setSelectedCategoryType('iphone')}>
                     <Image source={require('../assets/Data/iphoneCategory.png')} style={{ width: 105, height: 105, resizeMode: 'contain', borderRadius: 15 }} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setSelectedCategoryType('ipad')}>
                     <Image source={require('../assets/Data/ipadCategory.png')} style={{ width: 105, height: 105, resizeMode: 'contain', borderRadius: 15 }} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setSelectedCategoryType('macbook')}>
                     <Image source={require('../assets/Data/macbookcategory.png')} style={{ width: 105, height: 105, resizeMode: 'contain', borderRadius: 15 }} />
                 </TouchableOpacity>
             </View>
 
-            {/* Filters */}
             <View style={{ flexDirection: 'row', width: '90%', alignSelf: 'center', justifyContent: 'space-between', marginTop: 20 }}>
                 <TouchableOpacity
                     style={[styles.filterButton, selectedCategory === 'Best Sales' && styles.selectedButton]}
@@ -87,9 +111,8 @@ const Screen_02 = () => {
             </View>
 
             <ScrollView ontentContainerStyle={{ flexGrow: 1 }}>
-                {/* Product List */}
                 <FlatList
-                    data={products}
+                    data={getFilteredProductList()}
                     keyExtractor={item => item.id.toString()}
                     renderItem={({ item }) => (
                         <View style={styles.productContainer}>
@@ -108,21 +131,40 @@ const Screen_02 = () => {
                     )}
                 />
 
-                {/* "See All" Button */}
-                <TouchableOpacity style={{
-                    width: '90%',
-                    height: 50,
-                    backgroundColor: '#f3f4f6',
-                    borderRadius: 10,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    alignSelf: 'center',
-                    marginTop: 10,
-                }}>
-                    <Text style={{ color: 'gray', fontSize: 21 }}>See all</Text>
-                </TouchableOpacity>
+                {showAll ? (
+                    <TouchableOpacity
+                        style={{
+                            width: '90%',
+                            height: 50,
+                            backgroundColor: '#f3f4f6',
+                            borderRadius: 12,
+                            alignSelf: 'center',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginBottom: 20,
+                        }}
+                        onPress={() => setShowAll(false)}
+                    >
+                        <Text style={{ fontSize: 18, color: 'gray' }}>Show Less</Text>
+                    </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity
+                        style={{
+                            width: '90%',
+                            height: 50,
+                            backgroundColor: '#f3f4f6',
+                            borderRadius: 12,
+                            alignSelf: 'center',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginBottom: 20,
+                        }}
+                        onPress={() => setShowAll(true)}
+                    >
+                        <Text style={{ fontSize: 18, color: 'gray' }}>See all</Text>
+                    </TouchableOpacity>
+                )}
 
-                {/* Banner */}
                 <View style={{
                     width: '90%',
                     alignSelf: 'center',
@@ -133,7 +175,6 @@ const Screen_02 = () => {
                 </View>
             </ScrollView>
 
-            {/* Bottom Navigation */}
             <View style={styles.bottomNavigation}>
                 <TouchableOpacity style={styles.navItem}>
                     <Image source={require('../assets/Data/clarity_home_solid.png')} style={styles.navIcon} />
