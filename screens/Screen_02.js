@@ -54,7 +54,9 @@ const Screen_02 = () => {
                     <TouchableOpacity>
                         <Image source={require('../assets/Data/basket.png')} style={{ marginLeft: 120 }} />
                     </TouchableOpacity>
-                    <Image source={require('../assets/Data/Avatar_31.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
+                    <TouchableOpacity>
+                        <Image source={require('../assets/Data/Avatar_31.png')} style={{ width: 35, height: 35, marginLeft: 5 }} />
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{ flexDirection: 'row', width: '90%', alignSelf: 'center', height: 45, marginTop: 20 }}>
@@ -126,10 +128,12 @@ const Screen_02 = () => {
                                 <Image source={require('../assets/Data/Rating5.png')} style={{ width: 70, height: 20, resizeMode: 'contain' }} />
                             </View>
                             <View style={styles.priceContainer}>
-                                <TouchableOpacity>
-                                    <Image source={require('../assets/Data/add.png')} style={styles.addIcon} />
-                                </TouchableOpacity>
-                                <Text style={styles.productPrice}>{item.price}</Text>
+                                <View style={{ flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                                    <TouchableOpacity>
+                                        <Image source={require('../assets/Data/add.png')} style={styles.addIcon} />
+                                    </TouchableOpacity>
+                                    <Text style={styles.productPrice}>{item.price}</Text>
+                                </View>
                             </View>
                         </View>
                     )}
@@ -239,8 +243,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     priceContainer: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'flex-end',
     },
     productPrice: {
         fontSize: 18,
@@ -249,7 +255,7 @@ const styles = StyleSheet.create({
     addIcon: {
         width: 30,
         height: 30,
-        marginRight: 10,
+        marginBottom: 10,
     },
     bottomNavigation: {
         flexDirection: 'row',
