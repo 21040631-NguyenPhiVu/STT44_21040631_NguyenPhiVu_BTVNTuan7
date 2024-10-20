@@ -24,7 +24,7 @@ const Screen_02 = () => {
     const [selectedCategoryType, setSelectedCategoryType] = useState('iphone');
     const [selectedCategory, setSelectedCategory] = useState('Best Sales');
     const [showAll, setShowAll] = useState(false);
-
+    const [cart, setCart] = useState({});
     const filteredProducts = products.filter(product => product.type === selectedCategoryType);
     const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 4);
 
@@ -54,6 +54,20 @@ const Screen_02 = () => {
             default:
                 return displayedProducts;
         }
+    };
+
+    const handleAddToCart = (item) => {
+        setCart(prevCart => {
+            const updatedCart = { ...prevCart };
+            if (updatedCart[item.id]) {
+                updatedCart[item.id].quantity += 1;
+            } else {
+                updatedCart[item.id] = { ...item, quantity: 1 };
+            }
+            return updatedCart;
+        });
+
+        navigation.navigate('CartScreen', { cart: { ...cart, [item.id]: { ...item, quantity: (cart[item.id]?.quantity || 0) + 1 } } });
     };
 
     return (
@@ -142,7 +156,7 @@ const Screen_02 = () => {
                             </View>
                             <View style={styles.priceContainer}>
                                 <View style={{ flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handleAddToCart(item)}>
                                         <Image source={require('../assets/Data/add.png')} style={styles.addIcon} />
                                     </TouchableOpacity>
                                     <Text style={styles.productPrice}>{item.price}</Text>
