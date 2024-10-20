@@ -23,7 +23,7 @@ const Screen_01 = () => {
             password: '22221111',
         },
         {
-            email: 'hihi@gmail.com',
+            email: 'vu0411@gmail.com',
             password: 'sasasa',
         },
     ];

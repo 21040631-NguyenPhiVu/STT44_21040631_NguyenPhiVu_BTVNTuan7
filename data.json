@@ -1,0 +1,86 @@
+[
+    {
+        "id": 1,
+        "type": "iphone",
+        "name": "Iphone 12",
+        "price": "$899",
+        "image": "../assets/Data/1.png"
+    },
+    {
+        "id": 2,
+        "type": "iphone",
+        "name": "Iphone 11",
+        "price": "$889",
+        "image": "../assets/Data/2.png"
+    },
+    {
+        "id": 3,
+        "type": "iphone",
+        "name": "Iphone XSMax",
+        "price": "$799",
+        "image": "../assets/Data/3.png"
+    },
+    {
+        "id": 4,
+        "type": "iphone",
+        "name": "Iphone 13",
+        "price": "$999",
+        "image": "../assets/Data/4.png"
+    },
+    {
+        "id": 5,
+        "type": "ipad",
+        "name": "Ipad",
+        "price": "$1999",
+        "image": "../assets/Data/ipad.png"
+    },
+    {
+        "id": 6,
+        "type": "ipad",
+        "name": "Ipad Air",
+        "price": "$1299",
+        "image": "../assets/Data/ipadAir.png"
+    },
+    {
+        "id": 7,
+        "type": "ipad",
+        "name": "Ipad Air2",
+        "price": "$1399",
+        "image": "../assets/Data/ipadAir2.png"
+    },
+    {
+        "id": 8,
+        "type": "ipad",
+        "name": "Ipad Mini",
+        "price": "$799",
+        "image": "../assets/Data/ipadMini.png"
+    },
+    {
+        "id": 9,
+        "type": "macbook",
+        "name": "Macbook",
+        "price": "$2999",
+        "image": "../assets/Data/macbook.png"
+    },
+    {
+        "id": 10,
+        "type": "macbook",
+        "name": "Macbook Air",
+        "price": "$1999",
+        "image": "../assets/Data/macbookAir.png"
+    },
+    {
+        "id": 11,
+        "type": "macbook",
+        "name": "Macbook M1",
+        "price": "$2999",
+        "image": "../assets/Data/macbookM1.png"
+    },
+    {
+        "id": 12,
+        "type": "macbook",
+        "name": "Macbook Pro",
+        "price": "$3999",
+        "image": "../assets/Data/macbookPro.png"
+    }
+]

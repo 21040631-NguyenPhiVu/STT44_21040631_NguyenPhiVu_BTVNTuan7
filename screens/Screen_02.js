@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet, TextInput, FlatList, SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import axios from "axios";
 
 const Screen_02 = () => {
-    const products = [
-        { id: 1, type: 'iphone', name: 'Iphone 12', price: '$899', image: require('../assets/Data/1.png') },
-        { id: 2, type: 'iphone', name: 'Iphone 11', price: '$889', image: require('../assets/Data/2.png') },
-        { id: 3, type: 'iphone', name: 'Iphone XSMax', price: '$799', image: require('../assets/Data/3.png') },
-        { id: 4, type: 'iphone', name: 'Iphone 13', price: '$999', image: require('../assets/Data/4.png') },
-        { id: 5, type: 'ipad', name: 'Ipad', price: '$1999', image: require('../assets/Data/ipad.png') },
-        { id: 6, type: 'ipad', name: 'Ipad Air', price: '$1299', image: require('../assets/Data/ipadAir.png') },
-        { id: 7, type: 'ipad', name: 'Ipad Air2', price: '$1399', image: require('../assets/Data/ipadAir2.png') },
-        { id: 8, type: 'ipad', name: 'Ipad Mini', price: '$799', image: require('../assets/Data/ipadMini.png') },
-        { id: 9, type: 'macbook', name: 'Macbook', price: '$2999', image: require('../assets/Data/macbook.png') },
-        { id: 10, type: 'macbook', name: 'Macbook Air', price: '$1999', image: require('../assets/Data/macbookAir.png') },
-        { id: 11, type: 'macbook', name: 'Macbook M1', price: '$2999', image: require('../assets/Data/macbookM1.png') },
-        { id: 12, type: 'macbook', name: 'Macbook Pro', price: '$3999', image: require('../assets/Data/macbookPro.png') },
-    ];
+    // const products = [
+    //     { id: 1, type: 'iphone', name: 'Iphone 12', price: '$899', image: require('../assets/Data/1.png') },
+    //     { id: 2, type: 'iphone', name: 'Iphone 11', price: '$889', image: require('../assets/Data/2.png') },
+    //     { id: 3, type: 'iphone', name: 'Iphone XSMax', price: '$799', image: require('../assets/Data/3.png') },
+    //     { id: 4, type: 'iphone', name: 'Iphone 13', price: '$999', image: require('../assets/Data/4.png') },
+    //     { id: 5, type: 'ipad', name: 'Ipad', price: '$1999', image: require('../assets/Data/ipad.png') },
+    //     { id: 6, type: 'ipad', name: 'Ipad Air', price: '$1299', image: require('../assets/Data/ipadAir.png') },
+    //     { id: 7, type: 'ipad', name: 'Ipad Air2', price: '$1399', image: require('../assets/Data/ipadAir2.png') },
+    //     { id: 8, type: 'ipad', name: 'Ipad Mini', price: '$799', image: require('../assets/Data/ipadMini.png') },
+    //     { id: 9, type: 'macbook', name: 'Macbook', price: '$2999', image: require('../assets/Data/macbook.png') },
+    //     { id: 10, type: 'macbook', name: 'Macbook Air', price: '$1999', image: require('../assets/Data/macbookAir.png') },
+    //     { id: 11, type: 'macbook', name: 'Macbook M1', price: '$2999', image: require('../assets/Data/macbookM1.png') },
+    //     { id: 12, type: 'macbook', name: 'Macbook Pro', price: '$3999', image: require('../assets/Data/macbookPro.png') },
+    // ];
 
+    const [products, setProducts] = useState([]);
     const navigation = useNavigation();
     const [selectedCategoryType, setSelectedCategoryType] = useState('iphone');
     const [selectedCategory, setSelectedCategory] = useState('Best Sales');
@@ -25,6 +27,17 @@ const Screen_02 = () => {
 
     const filteredProducts = products.filter(product => product.type === selectedCategoryType);
     const displayedProducts = showAll ? filteredProducts : filteredProducts.slice(0, 4);
+
+    useEffect(() => {
+        axios.get('https://6714bfbc690bf212c7625513.mockapi.io/api/products/products')
+            .then(response => {
+                setProducts(response.data);
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
 
     const getFilteredProductList = () => {
         if (showAll) {
@@ -122,7 +135,7 @@ const Screen_02 = () => {
                     keyExtractor={item => item.id.toString()}
                     renderItem={({ item }) => (
                         <View style={styles.productContainer}>
-                            <Image source={item.image} style={styles.productImage} />
+                            <Image source={{ uri: item.image }} style={styles.productImage} />
                             <View style={styles.productDetails}>
                                 <Text style={styles.productName}>{item.name}</Text>
                                 <Image source={require('../assets/Data/Rating5.png')} style={{ width: 70, height: 20, resizeMode: 'contain' }} />
